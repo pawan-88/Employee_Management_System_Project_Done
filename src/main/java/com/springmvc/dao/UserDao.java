@@ -12,7 +12,7 @@ public interface UserDao {
 	
 //	public List<User> getEmpDetailsByEmail(String email);
 //	public User getByUserEmail(String email);
-	public List<User> getEmpDetailsByEmail(String email);
+	public List<User> getEmpDetailsByEmail();
 	
 	public List<User> getEmpByEmail(String em);
 	public int saveEmp(User user); 
@@ -26,8 +26,10 @@ public interface UserDao {
 	
 	public void deleteEmp(int id);
 	
-//	public void getUserById(int id);
-	
+//	public void deleteAddress(int addressId);
+	 public void deleteAddress(int addressId);
+
+	public boolean isEmailPresent(String email);
 	
 	/// Employee Multiple Address
 //	void saveEmployee(User user);

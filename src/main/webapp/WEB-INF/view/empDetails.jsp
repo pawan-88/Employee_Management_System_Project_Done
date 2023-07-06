@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <style>
 body {
 	background-color: #F6F6F6;
@@ -22,6 +23,22 @@ body {
 	color: #333;
 	padding: 60px;
 }
+
+.btn.btn-danger {
+	background-color: #dc3545;
+	color: #fff;
+	transition: background-color 0.3s;
+}
+
+.btn.btn-danger:hover {
+	background-color: #c82333;
+}
+.logout-container {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+  }
+
 
 .card {
 	background-color: 00BFFF;
@@ -71,6 +88,10 @@ body {
 	crossorigin="anonymous">
 </head>
 <body>
+
+<%
+response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+%>
 	<header class="header">
 		<h1>Welcome to Your Website</h1>
 		<nav>
@@ -81,9 +102,9 @@ body {
 				</li>
 				<li class="nav-item"><a class="nav-link" href="register">Register</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Services</a>
+				<li class="nav-item"><a class="nav-link" href="service">Services</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+				<li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -141,13 +162,13 @@ body {
 									<!-- <th scope="col">Password</th> -->
 									<th scope="col">Contact Number</th>
 									<th scope="col">Departments</th>
-									<th scope="col">UserType</th>
+									<!-- <th scope="col">UserType</th>
 									<th scope="col">PermanenetAddress</th>
 									<th scope="col">TemporaryAddress</th>
 									<th scope="col">StreetAddress</th>
 									<th scope="col">City</th>
 									<th scope="col">State/Province</th>
-									<th scope="col">Country</th>
+									<th scope="col">Country</th> -->
 									<th scope="col">Action</th>
 
 								</tr>
@@ -162,14 +183,15 @@ body {
 										<%-- <td>${emp.password}</td> --%>
 										<td>${emp.contactNumber }</td>
 										<td>${emp.department}</td>
-										<td>${emp.userType }</td>
+										<%-- <td>${emp.userType }</td>
+										
 										<td>${emp.address[0].permanenetAddress }</td>
 										<td>${emp.address[0].temporaryAddress}</td>
 										<td>${emp.address[0].streetAddress}</td>
 										<td>${emp.address[0].city}</td>
 										<td>${emp.address[0].stateProvince}</td>
-										<td>${emp.address[0].country}</td>
-										
+										<td>${emp.address[0].country}</td> --%>
+
 										<td><a href="viewDetails/${emp.id}"
 											class="btn btn-sm btn-primary-view"
 											style="background-color: red; color: white;">View</a> <a
@@ -186,8 +208,15 @@ body {
 		</div>
 	</div>
 
-<footer class="footer">
-    <p>&copy; 2023 Your Website. All rights reserved. | Design by Inexture Solutions LLP...</p>
-</footer>
+	<div class="logout-container">
+		<a href="login" class="btn btn-sm btn-danger"> <span
+			class="button-text">Log Out</span>
+		</a>
+	</div>
+
+	<footer class="footer">
+		<p>&copy; 2023 Your Website. All rights reserved. | Design by
+			Inexture Solutions LLP...</p>
+	</footer>
 </body>
 </html>

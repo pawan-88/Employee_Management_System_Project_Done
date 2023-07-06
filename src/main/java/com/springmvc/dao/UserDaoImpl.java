@@ -2,9 +2,10 @@ package com.springmvc.dao;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -24,10 +25,12 @@ public class UserDaoImpl implements UserDao {
 	private HibernateTemplate hibernateTemplate;
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+	@Autowired
+	private SessionFactory sessionFactory;
+
 	@Transactional
 	public int saveUser(User user) {
-		for(Address address: user.getAddress()) {
+		for (Address address : user.getAddress()) {
 			address.setUser(user);
 //			System.out.println(user);
 		}
@@ -59,7 +62,7 @@ public class UserDaoImpl implements UserDao {
 //		}); 
 //		return us;
 //	
-	
+
 //	public User loginUser(String email, String password) {
 //	    String sql = "from User where email=:email";
 //	    User user = null;
@@ -93,35 +96,35 @@ public class UserDaoImpl implements UserDao {
 //	        session.close();
 //	    }
 //	}
-	//-----------------------------------------------------------------------//
+	// -----------------------------------------------------------------------//
 	public User loginUser(String email, String password) {
-	    String sql = "from User where email=:em";
-	    User user = null;
-	    
-	    Session session = hibernateTemplate.getSessionFactory().openSession();
-	    try {
-	        Query query = session.createQuery(sql);
-	        query.setString("em", email);
-	        user = (User) query.uniqueResult();
-	        
-	        if (user != null) {
-	            String DBPassword = user.getPassword();
+		String sql = "from User where email=:em";
+		User user = null;
+
+		Session session = hibernateTemplate.getSessionFactory().openSession();
+		try {
+			Query query = session.createQuery(sql);
+			query.setString("em", email);
+			user = (User) query.uniqueResult();
+
+			if (user != null) {
+				String DBPassword = user.getPassword();
 //	            System.out.println("LoginPass: "+password);
 //	            System.out.println("DBPassword: " + DBPassword);
 
-	            if (bCryptPasswordEncoder.matches(password, DBPassword)) {
-	            	System.out.println("LoginPass: "+password);
-		            System.out.println("DBPassword: " + DBPassword);
-	                return user;
-	            }
-	        }
-	    } finally {
-	        session.close();
-	    }
+				if (bCryptPasswordEncoder.matches(password, DBPassword)) {
+					System.out.println("LoginPass: " + password);
+					System.out.println("DBPassword: " + DBPassword);
+					return user;
+				}
+			}
+		} finally {
+			session.close();
+		}
 		return user;
 	}
 
-	//----------------------------------------------------------------------//
+	// ----------------------------------------------------------------------//
 //	public User loginUser(String email, String password) {
 //	    String sql = "from User where email=:em";
 //	    User user = null;
@@ -201,25 +204,22 @@ public class UserDaoImpl implements UserDao {
 //	}
 
 	@Transactional
-	public List<User> getEmpDetailsByEmail(String email){
-		User user = new User();
+	public List<User> getEmpDetailsByEmail() {
+//		User user = new User();
 		List<User> list = hibernateTemplate.loadAll(User.class);
-//		for(Address address: user.getAddress()) {
-//			address.setUser(user);
-////			System.out.println(user);
-//		}
+
 		return list;
-		
+
 	}
-	
+
 	public List<User> getEmpByEmail(String em) {
 		String hql = "FROM User where email=:em";
-		Query<User> query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql,User.class);
+		Query<User> query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql, User.class);
 		query.setParameter("em", em);
 		List<User> list = query.list();
 		return list;
 	}
-	
+
 //	@Transactional
 //	public int saveEmp(User user) {
 //	    try {
@@ -236,17 +236,17 @@ public class UserDaoImpl implements UserDao {
 //	    }
 //	}
 
-	///Sve emp for multiple address
+	/// Sve emp for multiple address
 	@Transactional
 	public int saveEmp(User user) {
-		for(Address address: user.getAddress()) {
+		for (Address address : user.getAddress()) {
 			address.setUser(user);
 //			System.out.println(user);
 		}
 		int i = (Integer) hibernateTemplate.save(user);
 		System.out.println(i);
 		return i;
-		
+
 	}
 
 	public User getEmployeeById(int id) {
@@ -275,7 +275,48 @@ public class UserDaoImpl implements UserDao {
 		hibernateTemplate.delete(user);
 	}
 
+//	@Transactional
+//	@Override
+//	public void deleteAddress(int addressId) {
+//		Address address= hibernateTemplate.get(Address.class, addressId);
+//		
+//		if(address != null) {
+//			User user = address.getUser();
+//			user.getAddress().remove(address);
+//			hibernateTemplate.delete(address);
+//			hibernateTemplate.saveOrUpdate(user);
+//		}
+//	}
+	@Transactional
+	public void deleteAddress(int addressId) {
+		Address address = hibernateTemplate.get(Address.class, addressId);
+		User user = address.getUser();
+		user.getAddress().remove(address);
+
+		hibernateTemplate.delete(address);
+
+	}
 	
-	// Multiple Address methhod
+	@Transactional
+	public boolean isEmailPresent(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<User> query = session.createQuery("FROM User WHERE email = :email", User.class);
+        query.setParameter("email", email);
+        return query.uniqueResult() != null;
+    }
+	//	@Transactional
+//	public User deleteAddress(int addressId) {
+//		
+//		Address address = hibernateTemplate.get(Address.class, addressId);
+//
+//		hibernateTemplate.delete(address);
+//		return null;
+//	@Transactional
+////    @Override
+//    public Address getAddressById(int addressId) {
+//        return hibernateTemplate.get(Address.class, addressId);
+//    }
+
+	
 
 }

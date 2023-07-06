@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,6 +26,7 @@ import com.springmvc.entity.User;
 @Controller
 @RequestMapping("/newPassword")
 public class NewPassword {
+	
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -36,17 +38,28 @@ public class NewPassword {
 //	}
 	
 	@PostMapping
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response, @ModelAttribute User user)
 			throws ServletException, IOException {
-
+		System.out.println(user);
 		HttpSession session = request.getSession();
-		User user = new User();
-		
+		String dbPassword = user.getPassword();
+		System.out.println("DB Pass: "+dbPassword);
 		String newPassword = request.getParameter("password");
 		String confPassword = request.getParameter("confPassword");
-		String rawPassword = newPassword+confPassword;
-		String encodePassword =bCryptPasswordEncoder.encode(rawPassword);
-		System.out.println(encodePassword);
+		System.out.println("New Pass: "+newPassword);
+		System.out.println("Conf Pass: "+confPassword);
+		
+		System.out.println("------------------------------------------------------------------------");
+//		String rawPassword = newPassword+confPassword;
+//		System.out.println("RawPassword: "+rawPassword);
+//		user.setPassword(bCryptPasswordEncoder.encode(rawPassword));
+		String encodePassword =bCryptPasswordEncoder.encode(newPassword);
+		String encodePassword2 =bCryptPasswordEncoder.encode(confPassword);
+		System.out.println("New Password: "+encodePassword);
+		System.out.println("Conf Password: "+encodePassword2);
+		System.out.println("DB Pass: "+dbPassword);
+		System.out.println(bCryptPasswordEncoder.matches("RawPassword: "+encodePassword,"DBPass: "+ user.getPassword()));
+//		System.out.println("Updated Pass: "+encodePassword);
 		
 		RequestDispatcher dispatcher = null;
 		if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {

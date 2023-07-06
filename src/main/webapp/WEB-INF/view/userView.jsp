@@ -276,11 +276,11 @@ body {
 								</div>
 							</c:forEach>
 							<div class="text-center">
-
 								<a href="${pageContext.request.contextPath }/admin"
 									class="btn btn-primary">Back</a>
-
+		
 							</div>
+
 						</form>
 					</div>
 				</div>

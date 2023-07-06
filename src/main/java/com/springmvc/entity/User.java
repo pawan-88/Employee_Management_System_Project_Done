@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user_table")
@@ -25,6 +27,8 @@ public class User {
 
 	private String contactNumber;
 
+	@NotBlank(message = "email can not be  empty !!")
+	@Size(min = 5, max = 12, message = "Email must be between 5 to 12 characters !!")
 	private String email;
 
 	private String password;

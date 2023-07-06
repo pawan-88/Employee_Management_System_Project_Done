@@ -3,6 +3,20 @@
    <!DOCTYPE html>
 <html>
 <head>
+
+<script>
+    if (window.history && window.history.pushState) {
+        window.history.pushState('forward', null, './#forward');
+        $(window).on('popstate', function () {
+            if (confirm('Are you sure you want to go back?')) {
+                window.history.forward();
+            } else {
+                window.history.pushState('forward', null, './#forward');
+                window.location.href = 'logout'; // Replace 'logout' with the URL of your logout endpoint
+            }
+        });
+    }
+</script>
     <title>Your Page Title</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -71,10 +85,10 @@
                     <a class="nav-link" href="register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" href="service">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="contact">Contact</a>
                 </li>
             </ul>
         </nav>

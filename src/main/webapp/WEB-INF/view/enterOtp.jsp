@@ -1,51 +1,82 @@
 <html>
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            background-color: #F6F6F6;
-        }
-        
-        .header {
-            background-color: #FF7675;
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-        
-        .jumbotron {
-            background-color: #FAD7A0;
-            color: #333;
-            padding: 60px;
-        }
-        
-        .card {
-            background-color: 00BFFF;
-            color:F0F8FF;
-            margin-bottom: 30px;
-        }
-        
-        .footer {
-            background-color: #FF6B6B;
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-        
-        .btn-primary {
-            background-color: #FD79A8;
-            border-color: #FD79A8;
-        }
-        
-        .btn-primary:hover {
-            background-color: #FFA07A;
-            border-color: #FFA07A;
-        }
-        .nav-iten{
-        color:red;
-        }
-    </style>
+<script>
+	if (window.history && window.history.pushState) {
+		window.history.pushState('forward', null, './#forward');
+		$(window).on('popstate', function() {
+			if (confirm('Are you sure you want to go back?')) {
+				window.history.forward();
+			} else {
+				window.history.pushState('forward', null, './#forward');
+				window.location.href = 'logout'; // Replace 'logout' with the URL of your logout endpoint
+			}
+		});
+	}
+</script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+body {
+	background-color: #F6F6F6;
+}
+
+.header {
+	background-color: #FF7675;
+	padding: 20px;
+	text-align: center;
+	color: white;
+}
+
+.jumbotron {
+	background-color: #FAD7A0;
+	color: #333;
+	padding: 60px;
+}
+
+.btn.btn-danger {
+	background-color: #dc3545;
+	color: #fff;
+	transition: background-color 0.3s;
+}
+.logout-container {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+  }
+
+
+.btn.btn-danger:hover {
+	background-color: #c82333;
+}
+
+.card {
+	background-color: 00BFFF;
+	color: F0F8FF;
+	margin-bottom: 30px;
+}
+
+.footer {
+	background-color: #FF6B6B;
+	padding: 20px;
+	text-align: center;
+	color: white;
+}
+
+.btn-primary {
+	background-color: #FD79A8;
+	border-color: #FD79A8;
+}
+
+.btn-primary:hover {
+	background-color: #FFA07A;
+	border-color: #FFA07A;
+}
+
+.nav-iten {
+	color: red;
+}
+</style>
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
@@ -58,37 +89,29 @@
 
 <style type="text/css">
 .form-gap {
-    padding-top: 70px;
+	padding-top: 70px;
 }
 </style>
 </head>
 
 <body>
-    <header class="header">
-        <h1>Welcome to Your Website</h1>
-        <nav>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+	<header class="header">
+		<h1>Welcome to Your Website</h1>
+		<nav>
+			<ul class="nav justify-content-center">
+				<li class="nav-item"><a class="nav-link" href="index">Home</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+				<li class="nav-item"><a class="nav-link" href="login">Login</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="register">Register</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="service">Services</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
 
 	<div class="form-gap"></div>
 	<div class="container">
@@ -101,14 +124,12 @@
 								<i class="fa fa-lock fa-4x"></i>
 							</h3>
 							<h2 class="text-center">Enter OTP</h2>
-									<%
-		  			if(request.getAttribute("message")!=null)
-		  			{
-		  				out.print("<p class='text-danger ml-1'>"+request.getAttribute("message")+"</p>");
-		  			}
-		  
-		  %>
-	
+							<%
+							if (request.getAttribute("message") != null) {
+								out.print("<p class='text-danger ml-1'>" + request.getAttribute("message") + "</p>");
+							}
+							%>
+
 							<div class="panel-body">
 
 								<form id="register-form" action="Validate-Otp" method="POST">
@@ -138,10 +159,17 @@
 			</div>
 		</div>
 	</div>
-	
+
+	<div class="logout-container">
+		<a href="login" class="btn btn-sm btn-danger"> <span
+			class="button-text">Log Out</span>
+		</a>
+	</div>
+
 	<footer class="footer">
-    <p>&copy; 2023 Your Website. All rights reserved. | Design by Inexture Solutions LLP...</p>
-</footer>
-	
+		<p>&copy; 2023 Your Website. All rights reserved. | Design by
+			Inexture Solutions LLP...</p>
+	</footer>
+
 </body>
 </html>

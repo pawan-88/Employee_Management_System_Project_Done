@@ -34,6 +34,8 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>5.3.27</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
@@ -132,6 +134,18 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>7.0.1.Final</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>

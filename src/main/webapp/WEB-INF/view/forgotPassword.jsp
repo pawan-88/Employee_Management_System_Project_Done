@@ -1,6 +1,19 @@
 <!doctype html>
 <html>
 <head>
+<!-- <script>
+    if (window.history && window.history.pushState) {
+        window.history.pushState('forward', null, './#forward');
+        $(window).on('popstate', function () {
+            if (confirm('Are you sure you want to go back?')) {
+                window.history.forward();
+            } else {
+                window.history.pushState('forward', null, './#forward');
+                window.location.href = 'logout'; // Replace 'logout' with the URL of your logout endpoint
+            }
+        });
+    }
+</script> -->
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>Forgot Password Page</title>
@@ -105,9 +118,7 @@ body {
                 <li class="nav-item">
                     <a class="nav-link" href="index">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="login">Login</a>
                 </li>
@@ -115,10 +126,13 @@ body {
                     <a class="nav-link" href="register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" href="service">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about">About</a>
                 </li>
             </ul>
         </nav>

@@ -4,6 +4,19 @@
  --%><%@page isELIgnored="false"%>
 <html>
 <head>
+<script>
+    if (window.history && window.history.pushState) {
+        window.history.pushState('forward', null, './#forward');
+        $(window).on('popstate', function () {
+            if (confirm('Are you sure you want to go back?')) {
+                window.history.forward();
+            } else {
+                window.history.pushState('forward', null, './#forward');
+                window.location.href = 'logout'; // Replace 'logout' with the URL of your logout endpoint
+            }
+        });
+    }
+</script>
 <style type="text/css">
 body {
     background-color: #F6F6F6;

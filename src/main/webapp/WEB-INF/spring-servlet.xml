@@ -75,7 +75,7 @@
 		<property name="sessionFactory" ref="factory" />
 	</bean>
 	<bean id="bCryptPasswordEncoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" scope="singleton"/>
 
 
 
